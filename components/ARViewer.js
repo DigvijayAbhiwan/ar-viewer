@@ -1,27 +1,35 @@
 import "aframe";
-import "aframe-ar";
+import Script from "next/script";
 import { useEffect } from "react";
 
 const ARViewer = () => {
   useEffect(() => {
-    require("aframe");
-    require("aframe-ar");
+    require("aframe"); // Ensure A-Frame is loaded
   }, []);
 
   return (
-    <a-scene embedded arjs>
-      {/* Marker for AR */}
-      <a-marker preset="hiro">
-        <a-entity
-          position="0 0 0"
-          scale="0.5 0.5 0.5"
-          gltf-model="/models/ibm_computer.glb"
-        ></a-entity>
-      </a-marker>
+    <div>
+      {/* Asynchronous AR.js Script */}
+      <Script
+        src="https://cdn.jsdelivr.net/npm/aframe-ar"
+        strategy="beforeInteractive"
+      />
 
-      {/* Camera */}
-      <a-entity camera></a-entity>
-    </a-scene>
+      {/* A-Frame AR Scene */}
+      <a-scene embedded arjs>
+        {/* Marker for AR */}
+        <a-marker preset="hiro">
+          <a-entity
+            position="0 0 0"
+            scale="0.5 0.5 0.5"
+            gltf-model="/models/ibm_computer.glb"
+          ></a-entity>
+        </a-marker>
+
+        {/* Camera */}
+        <a-entity camera></a-entity>
+      </a-scene>
+    </div>
   );
 };
 
