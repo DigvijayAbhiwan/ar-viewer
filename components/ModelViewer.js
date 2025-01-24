@@ -1,14 +1,16 @@
-import dynamic from "next/dynamic";
+import { useEffect } from "react";
 
-// Dynamically import model-viewer so it only loads on the client side
-const ModelViewer = dynamic(() => import("@google/model-viewer"), {
-  ssr: false,
-});
+const ModelViewer = ({ modelSrc }) => {
+  useEffect(() => {
+    // Ensure the model-viewer component is only used on the client side
+    if (typeof window !== "undefined") {
+      import("@google/model-viewer"); // Dynamically import model-viewer only on the client-side
+    }
+  }, []);
 
-const ARViewer = ({ modelSrc }) => {
   return (
     <div style={{ width: "100%", height: "500px" }}>
-      <ModelViewer
+      <model-viewer
         src={modelSrc}
         alt="3D model"
         ar
@@ -16,9 +18,9 @@ const ARViewer = ({ modelSrc }) => {
         camera-controls
         environment-image="neutral"
         style={{ width: "100%", height: "100%" }}
-      ></ModelViewer>
+      ></model-viewer>
     </div>
   );
 };
 
-export default ARViewer;
+export default ModelViewer;
