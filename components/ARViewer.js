@@ -1,31 +1,26 @@
 import "aframe";
+import "aframe-ar";
 import { useEffect } from "react";
 
 const ARViewer = () => {
   useEffect(() => {
     require("aframe");
+    require("aframe-ar");
   }, []);
 
   return (
     <a-scene embedded arjs>
-      {/* Light Source */}
-      <a-light type="directional" position="1 1 1"></a-light>
+      {/* Marker for AR */}
+      <a-marker preset="hiro">
+        <a-entity
+          position="0 0 0"
+          scale="0.5 0.5 0.5"
+          gltf-model="/models/ibm_computer.glb"
+        ></a-entity>
+      </a-marker>
 
-      {/* 3D Model */}
-      <a-entity
-        position="0 0 0"
-        scale="1 1 1"
-        gltf-model="/models/ibm_computer.glb"
-      ></a-entity>
-
-      {/* Ground */}
-      <a-plane
-        position="0 -1 0"
-        rotation="-90 0 0"
-        width="10"
-        height="10"
-        color="#cccccc"
-      ></a-plane>
+      {/* Camera */}
+      <a-entity camera></a-entity>
     </a-scene>
   );
 };
